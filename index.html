@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+<script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    // Your  code will go here
+    let { useState } = React;
+    const UserProfile = ({ user }) => {
+        return (
+            <div className="user-profile">
+                <h2>{user.name}</h2>
+                <p>Email: {user.email}</p>
+                <p>Age: {user.age}</p>
+            </div>
+        );
+    };
+    const users = [
+        { id: 1, name: 'John Doe', email: 'john@example.com', age: 30 },
+        { id: 2, name: 'Jane Smith', email: 'jane@example.com', age: 25 },
+        { id: 3, name: 'Mike Johnson', email: 'mike@example.com', age: 35 },
+        // Add more users as needed
+    ];
+
+    const App = () => {
+        const [searchQuery, setSearchQuery] = useState('');
+
+        const handleSearch = (e) => {
+            setSearchQuery(e.target.value);
+        };
+
+        const filteredUsers = users.filter((user) =>
+            user.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        return (
+            <div className="app">
+                <input
+                    type="text"
+                    placeholder="Search by name"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="search-input"
+                />
+                <div className="user-profiles">
+                    {filteredUsers.map((user) => (
+                        <UserProfile key={user.id} user={user} />
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
+    let root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />)
+
+
+</script>
+
+</html>
